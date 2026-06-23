@@ -6,6 +6,7 @@ import { FeedList } from "@/features/feed/components/feed-list";
 export function FeedView() {
   return (
     <div className="space-y-4">
+      <h1 className="sr-only">Expert Listing property feed</h1>
       <StoriesRail />
       <FeedComposer />
       <FeedFilterBar />

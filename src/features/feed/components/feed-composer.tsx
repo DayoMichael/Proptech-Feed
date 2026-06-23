@@ -46,7 +46,7 @@ export function FeedComposer() {
           <button
             type="button"
             onClick={() => open()}
-            className="flex h-9 flex-1 items-center truncate rounded-full bg-surface-sunken px-2 text-left text-sm text-muted-foreground"
+            className="flex h-9 flex-1 items-center truncate rounded-full  px-2 text-left text-sm text-muted-foreground"
           >
             Share an update, ask a question, say hi…
           </button>

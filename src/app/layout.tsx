@@ -5,6 +5,14 @@ import "./globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { SplashScreen } from "@/components/splash-screen";
 import { ServiceWorkerRegister } from "@/components/service-worker-register";
+import { JsonLd } from "@/components/json-ld";
+import {
+  BRAND_COLOR,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_URL,
+  siteJsonLd,
+} from "@/lib/seo";
 
 const openRunde = localFont({
   variable: "--font-sans",
@@ -29,18 +37,40 @@ const openRunde = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Expert Listing · Property Feed",
-  description:
-    "A fast, mobile-first property feed for Nigeria. Browse listings, stories, and conversations  built to stay usable on slow networks.",
-  manifest: "/manifest.webmanifest",
-  appleWebApp: { capable: true, title: "Expert Listing" },
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${SITE_NAME} · Real estate listings, simplified`,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  manifest: "/site.webmanifest",
+  appleWebApp: { capable: true, title: SITE_NAME },
+  alternates: { canonical: "/" },
+  robots: {
+    index: true,
+    follow: true,
+    "max-image-preview": "large",
+    "max-snippet": -1,
+    "max-video-preview": -1,
+  },
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} · Real estate listings, simplified`,
+    description: SITE_DESCRIPTION,
+    url: "/",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE_NAME} · Real estate listings, simplified`,
+    description: SITE_DESCRIPTION,
+  },
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f6f7f5" },
-    { media: "(prefers-color-scheme: dark)", color: "#171717" },
-  ],
+  themeColor: BRAND_COLOR,
 };
 
 export default function RootLayout({
@@ -63,6 +93,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://i.pravatar.cc" crossOrigin="" />
       </head>
       <body className="min-h-full">
+        <JsonLd data={siteJsonLd()} />
         <ServiceWorkerRegister />
         <ThemeProvider
           attribute="class"
