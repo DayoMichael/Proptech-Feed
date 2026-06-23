@@ -1,0 +1,19 @@
+{
+  "name": "Expert Listing",
+  "short_name": "Expert Listing",
+  "description": "A fast, mobile-first property feed for Nigeria.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#171717",
+  "theme_color": "#171717",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any maskable"
+    }
+  ]
+}
