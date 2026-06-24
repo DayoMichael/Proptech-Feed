@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import type { Conversation, Message } from "@/types";
+import type { Conversation, Message, MediaItem, StoryReplyRef } from "@/types";
 import { currentUser } from "@/lib/mock/data";
 import { AUTO_REPLIES, seedConversations, seedMessages } from "@/lib/mock/chat";
 import { chatSocket, type ServerEvent } from "@/lib/chat-socket";
@@ -11,9 +11,18 @@ interface ChatState {
   messagesByConversation: Record<string, string[]>;
   conversationOrder: string[];
   typing: Record<string, boolean>;
-  sendMessage: (conversationId: string, text: string) => void;
+  sendMessage: (
+    conversationId: string,
+    text: string,
+    storyReply?: StoryReplyRef,
+    media?: MediaItem[],
+  ) => void;
   getOrCreateConversationWith: (userId: string) => string;
-  sendMessageToUser: (userId: string, text: string) => string;
+  sendMessageToUser: (
+    userId: string,
+    text: string,
+    storyReply?: StoryReplyRef,
+  ) => string;
   markConversationRead: (conversationId: string) => void;
 }
 
@@ -69,9 +78,10 @@ export const useChatStore = create<ChatState>((set, get) => ({
     return id;
   },
 
-  sendMessage: (conversationId, text) => {
+  sendMessage: (conversationId, text, storyReply, media) => {
     const body = text.trim();
-    if (!body) return;
+    const hasMedia = Boolean(media && media.length > 0);
+    if (!body && !hasMedia) return;
     const conversation = get().conversations[conversationId];
     if (!conversation) return;
 
@@ -82,6 +92,8 @@ export const useChatStore = create<ChatState>((set, get) => ({
       text: body,
       createdAt: new Date().toISOString(),
       status: "sending",
+      ...(storyReply ? { storyReply } : {}),
+      ...(hasMedia ? { media } : {}),
     };
 
     set((state) => ({
@@ -118,9 +130,9 @@ export const useChatStore = create<ChatState>((set, get) => ({
     });
   },
 
-  sendMessageToUser: (userId, text) => {
+  sendMessageToUser: (userId, text, storyReply) => {
     const conversationId = get().getOrCreateConversationWith(userId);
-    get().sendMessage(conversationId, text);
+    get().sendMessage(conversationId, text, storyReply);
     return conversationId;
   },
 

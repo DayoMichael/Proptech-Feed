@@ -219,7 +219,16 @@ function StoryStage({
         onSubmit={(e) => {
           e.preventDefault();
           if (!message.trim()) return;
-          sendMessageToUser(story.userId, message);
+          sendMessageToUser(story.userId, message, {
+            storyId: story.id,
+            segmentId: segment.id,
+            authorId: story.userId,
+            thumbnailUrl:
+              segment.media.type === "video"
+                ? segment.media.poster
+                : segment.media.url,
+            blurDataURL: segment.media.blurDataURL,
+          });
           setMessage("");
           setSent(true);
           window.setTimeout(() => setSent(false), 1800);

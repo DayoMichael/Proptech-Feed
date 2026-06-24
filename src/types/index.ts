@@ -92,6 +92,14 @@ export interface Story {
 
 export type MessageStatus = "sending" | "sent" | "delivered" | "seen";
 
+export interface StoryReplyRef {
+  storyId: string;
+  segmentId: string;
+  authorId: string;
+  thumbnailUrl: string;
+  blurDataURL?: string;
+}
+
 export interface Message {
   id: string;
   conversationId: string;
@@ -99,6 +107,8 @@ export interface Message {
   text: string;
   createdAt: string;
   status: MessageStatus;
+  storyReply?: StoryReplyRef;
+  media?: MediaItem[];
 }
 
 export interface Conversation {

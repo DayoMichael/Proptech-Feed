@@ -37,7 +37,8 @@ The reasoning: Instagram buries comments in a flat list with no permalink, which
 - Sign in with a passkey (and you're prompted to when you try to post, like, comment, or open a gated page)
 - **Post with media** — attach a photo (single image or a multi-image carousel) or a video, alongside text and location search in the composer
 - Like and reply, in proper threads
-- Send messages (DMs with typing and seen states)
+- **Message in DMs** — send text, photos, and video, with typing and seen states; the same upload pipeline as the composer
+- **Reply to a story** — your reply opens (or reuses) a DM with the story segment attached as context, Instagram-style
 - Save and share posts
 - Notifications
 - Stories, with a full-screen viewer and upload

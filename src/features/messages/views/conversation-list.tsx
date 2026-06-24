@@ -120,6 +120,7 @@ export function ConversationList() {
                         )}
                       >
                         {last?.senderId === currentUser.id && "You: "}
+                        {last?.storyReply && "Replied to story · "}
                         {last?.text}
                       </p>
                       {unread && (
