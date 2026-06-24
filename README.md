@@ -10,19 +10,17 @@ npm run dev
 npm run build && npm start
 ```
 
-Node 18+, no env vars, runs on mock data. Two things to know: feed state lives in memory so a refresh resets posts, likes, and comments, but your sign in is persisted to localStorage so it survives a refresh and only clears when you sign out; and the passkey prompt is credential-less, there to show the flow and the gating, not to store a real credential.
+Node 18+, no env vars, runs on mock data. Two things to know: feed state lives in memory so a refresh resets posts, likes, and comments, but sign in's are persisted. The passkey prompt is credential-less.
 
-## The Goal
-
-This project is one question dressed up as an app. How few bytes can I send over a slow link, and can it still feel good while I do it? Everything below comes back to that.
+This project caters for one of the biggest issues in the real estate market, show casing quality housing without getting compromised by slow networks.
 
 To see it the way I built it: throttle to Slow 3G and 4x CPU in a phone viewport, scroll (images blur in, nothing jumps), flip on Save-Data, then load once and go offline and keep navigating.
 
 ## Why Next.js
 
-The problem is a byte-counting problem, so I went where I'd get the most leverage for the least code. `next/image` does the heavy lifting: AVIF/WebP, responsive sizes, lazy loading, priority hints, out of the box. On 3G that alone decides whether the feed loads. Server components keep most of the page off the JS bundle, and route-level splitting plus prefetch mean a tab only costs what it needs while the next likely page loads on the idle radio. TypeScript, strict mode throughout.
+The problem is a byte-counting problem, and nextjs helps to solve this as `next/image` does the heavy lifting: AVIF/WebP, responsive sizes, lazy loading, priority hints, out of the box. On 3G that alone decides whether the feed loads. Server components keep most of the page off the JS bundle, and route-level splitting plus prefetch mean a tab only costs what it needs while the next likely page loads on the idle radio. TypeScript, strict mode throughout.
 
-## Three pages, because property is a conversation
+## Three pages, because selling/renting/buying a property is a conversation
 
 The part I spent the most time on is what happens when you tap a post. You build enough feeds and you start to feel where the obvious models break.
 
@@ -82,4 +80,4 @@ Actions live with their state, the Zustand way, and the feed store is split into
 
 ## Accessibility
 
-Semantic HTML, labelled controls, keyboard support, visible focus, AA contrast in both themes, reduced motion respected.
+Semantic HTML, labelled controls, keyboard support, visible focus.
