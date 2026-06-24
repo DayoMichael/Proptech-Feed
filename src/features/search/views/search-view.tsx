@@ -72,7 +72,7 @@ export function SearchView() {
             placeholder="Search posts, people, locations"
             aria-label="Search"
             className={cn(
-              "h-11 w-full rounded-full border bg-surface-sunken pl-11 pr-4 text-sm",
+              "h-11 w-full rounded-full border bg-surface-sunken pl-11 pr-4 text-base md:text-sm",
               focusRing,
             )}
           />

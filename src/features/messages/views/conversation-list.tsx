@@ -48,7 +48,7 @@ export function ConversationList() {
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search messages"
             aria-label="Search messages"
-            className="h-10 w-full rounded-full border bg-surface-sunken pl-10 pr-4 text-sm outline-none focus:border-ring"
+            className="h-10 w-full rounded-full border bg-surface-sunken pl-10 pr-4 text-base outline-none focus:border-ring md:text-sm"
           />
         </div>
       </div>

@@ -75,7 +75,7 @@ export function LocationInput({
           aria-autocomplete="list"
           aria-controls="location-suggestions"
           autoComplete="off"
-          className="h-5 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+          className="h-5 flex-1 bg-transparent text-base outline-none placeholder:text-muted-foreground md:text-sm"
         />
         {loading ? (
           <Loader2 className="size-4 shrink-0 animate-spin text-muted-foreground" aria-hidden />

@@ -233,7 +233,7 @@ function StoryStage({
           onBlur={() => setPaused(false)}
           placeholder={`Reply to ${author?.name.split(" ")[0]}…`}
           aria-label="Send a message"
-          className="h-10 flex-1 rounded-full border border-white/40 bg-transparent px-4 text-sm text-white outline-none placeholder:text-white/60 focus:border-white"
+          className="h-10 flex-1 rounded-full border border-white/40 bg-transparent px-4 text-base text-white outline-none placeholder:text-white/60 focus:border-white md:text-sm"
         />
         <button
           type="button"

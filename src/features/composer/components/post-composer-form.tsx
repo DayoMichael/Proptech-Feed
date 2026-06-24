@@ -140,7 +140,7 @@ export function PostComposerForm({
             placeholder={PLACEHOLDERS[tab]}
             aria-label="Post text"
             rows={4}
-            className="w-full resize-none bg-transparent text-[0.9375rem] leading-relaxed outline-none placeholder:text-muted-foreground"
+            className="w-full resize-none bg-transparent text-base leading-relaxed outline-none placeholder:text-muted-foreground md:text-[0.9375rem]"
           />
 
           {picked.length > 0 && (

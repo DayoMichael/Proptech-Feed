@@ -189,7 +189,7 @@ export function ChatView({ conversationId }: { conversationId: string }) {
           placeholder={`Message ${peer.name.split(" ")[0]}…`}
           aria-label="Message"
           className={cn(
-            "h-11 flex-1 rounded-full border bg-surface-sunken px-4 text-sm",
+            "h-11 flex-1 rounded-full border bg-surface-sunken px-4 text-base md:text-sm",
             focusRing,
           )}
         />
