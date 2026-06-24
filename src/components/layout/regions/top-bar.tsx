@@ -10,13 +10,13 @@ export function TopBar() {
   return (
     <header className="sticky top-0 z-40 border-b bg-card">
       <div className="mx-auto flex h-14 max-w-[1280px] items-center gap-3 px-3 sm:px-4">
-        <Brand />
-
-        <div className="ml-2 hidden flex-1 lg:block">
-          <DesktopTabs />
+        <div className="flex flex-1 items-center">
+          <Brand />
         </div>
 
-        <div className="ml-auto flex items-center gap-1.5">
+        <DesktopTabs />
+
+        <div className="flex flex-1 items-center justify-end gap-1.5">
           <NotificationsBell className="hidden lg:inline-flex" />
           <Button
             variant="ghost"

@@ -15,12 +15,13 @@ export interface NavItem {
   label: string;
   href: string;
   icon: LucideIcon;
+  hasMenu?: boolean;
 }
 
 export const primaryTabs: NavItem[] = [
   { label: "Feed", href: "/", icon: Home },
-  { label: "Rent", href: "/rent", icon: Home },
-  { label: "Buy", href: "/buy", icon: Home },
+  { label: "Rent", href: "/rent", icon: Home, hasMenu: true },
+  { label: "Buy", href: "/buy", icon: Home, hasMenu: true },
   { label: "Snagging", href: "/snagging", icon: Home },
   { label: "Shortlets", href: "/shortlets", icon: Home },
   { label: "Find Professionals", href: "/professionals", icon: Home },
