@@ -60,7 +60,6 @@ export function MediaLightbox({
           </button>
         </DialogClose>
 
-        {/* Click the empty backdrop to dismiss */}
         <DialogClose className="absolute inset-0" aria-label="Close" tabIndex={-1} />
 
         <div className="relative z-10 flex max-h-dvh max-w-[96vw] items-center justify-center">

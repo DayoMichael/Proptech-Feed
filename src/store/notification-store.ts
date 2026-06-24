@@ -45,6 +45,5 @@ export const useNotificationStore = create<NotificationState>((set) => ({
     })),
 }));
 
-/** Selector: number of unread notifications. */
 export const selectUnreadCount = (s: NotificationState) =>
   s.notifications.reduce((n, item) => n + (item.read ? 0 : 1), 0);

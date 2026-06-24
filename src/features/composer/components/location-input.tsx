@@ -28,7 +28,6 @@ export function LocationInput({
     return () => document.removeEventListener("pointerdown", onPointerDown);
   }, []);
 
-  // Clamp during render so stale indices never point past the list.
   const activeIndex = active < suggestions.length ? active : -1;
 
   function commit(label: string) {

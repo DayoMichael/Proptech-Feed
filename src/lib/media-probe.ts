@@ -48,7 +48,6 @@ export function probeVideo(
   });
 }
 
-/** Turn a picked File into a renderable MediaItem (with captured dimensions). */
 export async function fileToMediaItem(file: File): Promise<MediaItem> {
   if (file.type.startsWith("video")) {
     const url = URL.createObjectURL(file);

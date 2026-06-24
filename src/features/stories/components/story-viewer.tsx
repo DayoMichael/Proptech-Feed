@@ -75,7 +75,6 @@ function StoryStage({
     return () => window.removeEventListener("keydown", onKey);
   }, [next, prev, onClose]);
 
-  // Keep the video element in sync with the paused state.
   useEffect(() => {
     const el = videoRef.current;
     if (!el) return;
@@ -121,7 +120,6 @@ function StoryStage({
 
   return (
     <div className="relative mx-auto flex h-full w-full max-w-[440px] flex-col">
-      {/* Progress bars */}
       <div className="absolute inset-x-0 top-0 z-20 flex gap-1 px-3 pt-3">
         {story.segments.map((s, i) => (
           <span
@@ -140,7 +138,6 @@ function StoryStage({
         ))}
       </div>
 
-      {/* Header */}
       <div className="absolute inset-x-0 top-0 z-20 flex items-center gap-2 px-3 pb-3 pt-6">
         <Avatar className="size-8 ring-2 ring-white/70">
           <AvatarImage src={author?.avatarUrl} alt="" />
@@ -165,7 +162,6 @@ function StoryStage({
         </button>
       </div>
 
-      {/* Media + tap zones */}
       <div
         className="relative flex-1 touch-none select-none"
         onPointerDown={onPointerDown}
@@ -219,12 +215,10 @@ function StoryStage({
         </div>
       )}
 
-      {/* Footer actions */}
       <form
         onSubmit={(e) => {
           e.preventDefault();
           if (!message.trim()) return;
-          // A story reply becomes a DM to the author (dummy socket handles it).
           sendMessageToUser(story.userId, message);
           setMessage("");
           setSent(true);

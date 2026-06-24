@@ -24,7 +24,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: r.priority,
   }));
 
-  // Per-listing entries, with lastmod from each post's timestamp.
   const listingEntries: MetadataRoute.Sitemap = posts.map((post) => ({
     url: absoluteUrl(`/post/${post.id}`),
     lastModified: new Date(post.createdAt),

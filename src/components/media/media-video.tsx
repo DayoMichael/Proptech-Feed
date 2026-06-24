@@ -29,8 +29,9 @@ export function MediaVideo({
   const [started, setStarted] = useState(false);
   const [playing, setPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  // Stable identity so the single-video manager can match set/clear calls.
+  const pauseSelf = useRef(() => videoRef.current?.pause());
 
-  // Pause when scrolled out of view to stop wasting bandwidth/CPU.
   useEffect(() => {
     const el = videoRef.current;
     if (!started || !el) return;
@@ -45,8 +46,6 @@ export function MediaVideo({
     return () => observer.disconnect();
   }, [started]);
 
-  // Drive the first play explicitly once mounted  autoPlay can be ignored
-  // alongside preload="none".
   useEffect(() => {
     if (started) void resume();
   }, [started]);
@@ -57,13 +56,10 @@ export function MediaVideo({
     try {
       await el.play();
     } catch {
-      // The card's content-visibility:auto can suppress the element off-screen
-      // and reject play(); reloading the source recovers it.
       try {
         el.load();
         await el.play();
       } catch {
-        /* user can tap again */
       }
     }
   }
@@ -96,19 +92,15 @@ export function MediaVideo({
           preload="none"
           onPlay={() => {
             setPlaying(true);
-            const el = videoRef.current;
-            if (el) setActiveVideo(() => el.pause());
+            setActiveVideo(pauseSelf.current);
           }}
           onPause={() => {
             setPlaying(false);
-            const el = videoRef.current;
-            if (el) clearActiveVideo(() => el.pause());
+            clearActiveVideo(pauseSelf.current);
           }}
         />
       )}
 
-      {/* Tap-to-play overlay  shown before first play and whenever paused
-          (e.g. after the off-screen auto-pause), so play always works. */}
       {!playing && (
         <button
           type="button"

@@ -15,7 +15,6 @@ export interface StoryPlayer {
   next: () => void;
   prev: () => void;
   setPaused: (paused: boolean) => void;
-  /** Video segments report their own progress / completion. */
   reportProgress: (value: number) => void;
 }
 
@@ -61,10 +60,8 @@ export function useStoryPlayer(
       setUserIndex(u);
       setSegIndex(stories[u].segments.length - 1);
     }
-    // Already at the very first segment: just restart it (reset above).
   }, [reset, segIndex, userIndex, stories]);
 
-  // Auto-advance for image segments; videos drive their own timing.
   useEffect(() => {
     if (isVideo || paused || !segment) return;
     const duration = segment.durationMs;

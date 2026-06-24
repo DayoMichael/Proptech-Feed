@@ -1,11 +1,5 @@
 import { cn } from "@/lib/utils";
 
-/**
- * Full-bleed dark panel used by the standalone screens (Messages, Search,
- * Notifications, Profile, List). Edge-to-edge on mobile, a rounded card on
- * desktop  so every screen shares the same surface with no two-tone gap.
- * Compose a `shrink-0` header and a `flex-1 overflow-y-auto` body inside.
- */
 export function ScreenPanel({
   children,
   className,

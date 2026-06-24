@@ -32,8 +32,6 @@ function Meta({ author, time }: { author: User; time: string }) {
   );
 }
 
-/** An ancestor in the chain above the focal comment. The whole row navigates
- * to that comment's own page; a connector line links it to the row below. */
 export function ChainRow({
   author,
   time,
@@ -64,9 +62,6 @@ export function ChainRow({
   );
 }
 
-/** A direct reply under the focal post/comment. Tapping the body opens its own
- * conversation page; Reply opens an inline composer and, on send, navigates to
- * that comment's detail page. */
 export function ReplyRow({ commentId }: { commentId: string }) {
   const comment = useFeedStore((s) => s.comments[commentId]);
   const author = useFeedStore((s) =>

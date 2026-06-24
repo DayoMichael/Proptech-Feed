@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 
 import type { Post, User } from "@/types";
 
-/** Single source of truth for the production origin (no trailing slash). */
 export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
 ).replace(/\/$/, "");
@@ -12,7 +11,6 @@ export const SITE_DESCRIPTION =
   "Real estate listings, simplified. Browse homes, apartments, and properties for sale and rent across Nigeria.";
 export const BRAND_COLOR = "#2F8F63";
 
-/** Resolve a path to an absolute URL on the production origin. */
 export function absoluteUrl(path = "/"): string {
   return new URL(path, `${SITE_URL}/`).toString();
 }
@@ -20,17 +18,10 @@ export function absoluteUrl(path = "/"): string {
 interface PageMetaInput {
   title: string;
   description: string;
-  /** Route path, e.g. "/rent". Drives canonical + og:url. */
   path: string;
-  /** Set false for private / low-value routes that shouldn't be indexed. */
   index?: boolean;
 }
 
-/**
- * Build per-route metadata: unique title, description, self-referencing
- * canonical, and matching Open Graph / Twitter values. The root layout supplies
- * the title template, default OG/Twitter and the generated social images.
- */
 export function pageMetadata({
   title,
   description,
@@ -56,7 +47,6 @@ export function pageMetadata({
   };
 }
 
-/** Sitewide Organization + WebSite graph (rendered once in the root layout). */
 export function siteJsonLd() {
   return {
     "@context": "https://schema.org",
@@ -88,7 +78,6 @@ export function siteJsonLd() {
   };
 }
 
-/** RealEstateListing structured data for a single property post. */
 export function listingJsonLd(post: Post, author: User) {
   const images = post.media
     .filter((m) => m.type === "image")
@@ -112,7 +101,11 @@ export function listingJsonLd(post: Post, author: User) {
             price: String(post.price),
             priceCurrency: "NGN",
             availability: "https://schema.org/InStock",
-            ...(forRent ? { businessFunction: "http://purl.org/goodrelations/v1#LeaseOut" } : {}),
+            ...(forRent
+              ? {
+                  businessFunction: "http://purl.org/goodrelations/v1#LeaseOut",
+                }
+              : {}),
           },
         }
       : {}),
@@ -137,7 +130,6 @@ export function listingJsonLd(post: Post, author: User) {
   };
 }
 
-/** A concise, indexable headline derived from a post. */
 export function listingHeadline(post: Post): string {
   const firstLine = post.text.split("\n")[0]?.trim();
   if (firstLine) return truncate(firstLine, 70);

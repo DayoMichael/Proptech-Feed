@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 import { pop } from "@/motions";
 
-/** Small count badge for nav icons; renders nothing when count is 0. */
 export function NavBadge({
   count,
   className,

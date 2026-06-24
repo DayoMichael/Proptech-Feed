@@ -33,13 +33,11 @@ export function FeedList() {
   const gateRef = useRef<HTMLDivElement>(null);
   const promptedRef = useRef(false);
 
-  // Guests get the first page only; the rest unlocks after sign-in.
   const limit = signedIn ? count : PAGE_SIZE;
   const shown = visible.slice(0, limit);
   const hasMore = signedIn && count < visible.length;
   const lockedMore = !signedIn && visible.length > shown.length;
 
-  // Nudge guests to sign in once they've browsed a few posts.
   useEffect(() => {
     if (signedIn) {
       promptedRef.current = false;
@@ -62,8 +60,6 @@ export function FeedList() {
     return () => io.disconnect();
   }, [signedIn, openSignIn, shown.length]);
 
-  // Infinite scroll: reveal the next page as the sentinel nears the viewport.
-  // rootMargin loads ~2 screens early so new posts are ready before they show.
   useEffect(() => {
     if (!hasMore) return;
     const el = sentinelRef.current;

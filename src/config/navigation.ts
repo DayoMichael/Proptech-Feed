@@ -17,7 +17,6 @@ export interface NavItem {
   icon: LucideIcon;
 }
 
-/** Primary tabs in the desktop top navigation. */
 export const primaryTabs: NavItem[] = [
   { label: "Feed", href: "/", icon: Home },
   { label: "Rent", href: "/rent", icon: Home },
@@ -27,7 +26,6 @@ export const primaryTabs: NavItem[] = [
   { label: "Find Professionals", href: "/professionals", icon: Home },
 ];
 
-/** Account/section links in the left sidebar (and mobile menu). */
 export const sidebarNav: NavItem[] = [
   { label: "Messages", href: "/messages", icon: Mail },
   { label: "My Boosts", href: "/boosts", icon: Rocket },
@@ -35,7 +33,6 @@ export const sidebarNav: NavItem[] = [
   { label: "Communities", href: "/communities", icon: Users },
 ];
 
-/** Bottom tab bar on mobile. */
 export const bottomNav: NavItem[] = [
   { label: "Feed", href: "/", icon: Home },
   { label: "Search", href: "/search", icon: Search },
@@ -44,7 +41,6 @@ export const bottomNav: NavItem[] = [
   { label: "Profile", href: "/profile", icon: User },
 ];
 
-/** Routes only signed-in users can open; guests are prompted to sign in. */
 const PROTECTED_ROUTES = new Set([
   "/search",
   "/messages",

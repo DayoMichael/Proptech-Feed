@@ -5,11 +5,6 @@ import { useState } from "react";
 import type { MediaItem } from "@/types";
 import { MediaLightbox } from "@/components/media/media-lightbox";
 
-/**
- * Renders media attached to a comment. These are user-uploaded blob URLs
- * (mock upload), so they use plain <img>/<video> rather than next/image,
- * which can't optimize blob: sources. Tapping opens the lightbox.
- */
 export function CommentMedia({ media }: { media?: MediaItem[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 

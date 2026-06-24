@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 export interface NetworkStatus {
   saveData: boolean;
   effectiveType: string;
-  /** True when the user opted into Save-Data or is on a slow (2g) connection. */
   dataSaver: boolean;
 }
 
@@ -27,11 +26,6 @@ function read(conn: ConnectionLike): NetworkStatus {
   return { saveData, effectiveType, dataSaver: saveData || slow };
 }
 
-/**
- * Reads the Network Information API to drive Data Saver behaviour
- * (lower image quality, no video preload/autoplay) on slow/metered networks.
- * Falls back to a fast-connection default where the API is unavailable.
- */
 export function useNetworkStatus(): NetworkStatus {
   const [status, setStatus] = useState<NetworkStatus>(DEFAULT);
 

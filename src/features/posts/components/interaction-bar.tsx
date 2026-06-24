@@ -34,7 +34,6 @@ export function InteractionBar({ postId, onComment }: InteractionBarProps) {
       setShared(true);
       window.setTimeout(() => setShared(false), 1500);
     } catch {
-      /* user dismissed the share sheet  no-op */
     }
   }
 

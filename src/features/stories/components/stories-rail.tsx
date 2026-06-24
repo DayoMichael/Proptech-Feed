@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { Plus } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { currentUser, users } from "@/lib/mock/data";
@@ -11,6 +11,7 @@ import { useAuthStore } from "@/store/auth-store";
 import type { Story } from "@/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { StoryViewer } from "@/features/stories/components/story-viewer";
+import { useScrollOverflow } from "@/hooks/use-scroll-overflow";
 
 interface OpenState {
   list: Story[];
@@ -25,16 +26,24 @@ export function StoriesRail() {
 
   const [open, setOpen] = useState<OpenState | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+  const { ref: railRef, canScrollLeft, canScrollRight } =
+    useScrollOverflow<HTMLUListElement>([stories.length]);
 
   const myStory = stories.find((s) => s.userId === currentUser.id) ?? null;
 
-  // Unseen stories first; watched ones sink to the end (Instagram-style).
   const others = useMemo(() => {
     const list = stories.filter((s) => s.userId !== currentUser.id);
     return [...list].sort(
       (a, b) => Number(seenStories.has(a.id)) - Number(seenStories.has(b.id)),
     );
   }, [stories, seenStories]);
+
+  function scrollByRail(direction: 1 | -1) {
+    railRef.current?.scrollBy({
+      left: railRef.current.clientWidth * 0.8 * direction,
+      behavior: "smooth",
+    });
+  }
 
   async function handleFiles(files: FileList | null) {
     if (!files) return;
@@ -44,8 +53,11 @@ export function StoriesRail() {
   }
 
   return (
-    <section aria-label="Stories" className="-mx-3 sm:mx-0">
-      <ul className="flex gap-3 overflow-x-auto px-3 pb-1 sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <section aria-label="Stories" className="relative -mx-3 sm:mx-0">
+      <ul
+        ref={railRef}
+        className="flex gap-3 overflow-x-auto px-3 pb-1 sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
         {signedIn && (
         <li>
           <div className="flex w-16 shrink-0 flex-col items-center gap-1.5">
@@ -117,6 +129,32 @@ export function StoriesRail() {
           );
         })}
       </ul>
+
+      {canScrollLeft && (
+        <div className="pointer-events-none absolute left-0 top-0 hidden h-14 items-center pl-1 pr-8 sm:flex bg-gradient-to-r from-background to-transparent">
+          <button
+            type="button"
+            onClick={() => scrollByRail(-1)}
+            aria-label="Scroll stories left"
+            className="pointer-events-auto flex size-8 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-md transition-colors hover:bg-secondary"
+          >
+            <ChevronLeft className="size-4" />
+          </button>
+        </div>
+      )}
+
+      {canScrollRight && (
+        <div className="pointer-events-none absolute right-0 top-0 hidden h-14 items-center pl-8 pr-1 sm:flex bg-gradient-to-l from-background to-transparent">
+          <button
+            type="button"
+            onClick={() => scrollByRail(1)}
+            aria-label="Scroll stories right"
+            className="pointer-events-auto flex size-8 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-md transition-colors hover:bg-secondary"
+          >
+            <ChevronRight className="size-4" />
+          </button>
+        </div>
+      )}
 
       <input
         ref={fileRef}

@@ -48,8 +48,6 @@ export function useMediaPicker() {
           apply({ width, height, poster }),
         );
       } else {
-        // Compress on a worker thread, then swap the preview to the lighter
-        // WebP and release the original blob URL.
         compressImage(file)
           .then((result) => {
             apply({
@@ -60,7 +58,6 @@ export function useMediaPicker() {
             URL.revokeObjectURL(url);
           })
           .catch(() => {
-            /* keep the original preview if compression fails */
           });
       }
     });

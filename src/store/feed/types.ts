@@ -5,7 +5,6 @@ import type { CommentsSlice } from "./comments.slice";
 import type { StoriesSlice } from "./stories.slice";
 import type { FiltersSlice } from "./filters.slice";
 
-/** The full feed store: the union of its responsibility slices. */
 export type FeedState = PostsSlice & CommentsSlice & StoriesSlice & FiltersSlice;
 
 export interface NewPostDraft {

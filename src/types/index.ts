@@ -23,7 +23,6 @@ export interface ImageMedia {
   width: number;
   height: number;
   alt: string;
-  /** Tiny inline placeholder (data URL)  no extra request on slow networks. */
   blurDataURL?: string;
 }
 
@@ -35,7 +34,6 @@ export interface VideoMedia {
   height: number;
   durationMs: number;
   alt: string;
-  /** Tiny inline placeholder (data URL) for the poster  no extra request. */
   blurDataURL?: string;
 }
 
@@ -45,20 +43,16 @@ export interface Post {
   id: string;
   authorId: string;
   category: PostCategory;
-  /** ISO timestamp. */
   createdAt: string;
   text: string;
   location?: string;
-  /** Asking price (sale) or yearly rent, in naira  drives the Budget filter. */
   price?: number;
   tags: PostTag[];
   media: MediaItem[];
   likeCount: number;
   likedByMe: boolean;
-  /** User ids shown as stacked avatars in the "liked by" row. */
   likedByPreview: string[];
   commentCount: number;
-  /** Id of the comment shown as an inline preview, if any. */
   topCommentId?: string;
   bookmarkCount: number;
   savedByMe: boolean;
@@ -86,7 +80,6 @@ export interface FeedPage {
 export interface StorySegment {
   id: string;
   media: MediaItem;
-  /** How long an image segment is shown; videos use their own duration. */
   durationMs: number;
   createdAt: string;
 }
@@ -110,7 +103,6 @@ export interface Message {
 
 export interface Conversation {
   id: string;
-  /** The other participant in this 1:1 DM. */
   participantId: string;
   lastMessageId?: string;
   unreadCount: number;

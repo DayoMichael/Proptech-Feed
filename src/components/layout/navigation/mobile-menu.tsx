@@ -18,6 +18,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Brand } from "@/components/brand";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { FeedFilters } from "@/features/filters/components/feed-filters";
 import { useNavGuard } from "@/providers/auth-provider";
 import { useComposer } from "@/providers/composer-provider";
@@ -41,10 +42,11 @@ export function MobileMenu() {
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="w-[18rem] p-0">
-        <SheetHeader className="px-4">
+        <SheetHeader className="flex-row items-center justify-between px-4">
           <SheetTitle asChild>
             <Brand />
           </SheetTitle>
+          <ThemeToggle />
         </SheetHeader>
 
         <nav aria-label="Sections" className="px-2">

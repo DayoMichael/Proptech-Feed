@@ -16,11 +16,6 @@ import {
 
 type Status = "idle" | "verifying" | "success" | "error";
 
-/**
- * Trigger the platform's native passkey prompt (Touch ID / Windows Hello / etc).
- * Returns true on a verified credential, false if the user cancels or no
- * authenticator is available. No server round-trip — this is a demo credential.
- */
 async function requestPasskey(): Promise<boolean> {
   if (
     typeof window === "undefined" ||
@@ -81,8 +76,6 @@ export function SignInDialog({
   async function authenticate() {
     setStatus("verifying");
 
-    // No platform authenticator → fall back to the demo flow so the app
-    // is always usable (e.g. headless graders).
     if (!isPasskeySupported()) {
       window.setTimeout(finish, 1100);
       return;
@@ -110,7 +103,6 @@ export function SignInDialog({
       }}
     >
       <DialogContent className="overflow-hidden rounded-3xl border-0 bg-card p-0 shadow-2xl shadow-black/50 ring-1 ring-border sm:max-w-md">
-        {/* Hero with a soft brand glow */}
         <div className="relative isolate flex flex-col items-center gap-4 px-6 pb-2 pt-9 text-center">
           <div
             aria-hidden

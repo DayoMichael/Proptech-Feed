@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 import type { User } from "@/types";
 import { currentUser } from "@/lib/mock/data";
@@ -9,12 +10,13 @@ interface AuthState {
   signOut: () => void;
 }
 
-/**
- * Mock auth  in-memory like the rest of the demo (resets on refresh). Signing
- * in resolves to the demo user; gated actions check `user` before running.
- */
-export const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  signIn: () => set({ user: currentUser }),
-  signOut: () => set({ user: null }),
-}));
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
+      user: null,
+      signIn: () => set({ user: currentUser }),
+      signOut: () => set({ user: null }),
+    }),
+    { name: "auth-session" },
+  ),
+);

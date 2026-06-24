@@ -12,9 +12,7 @@ interface ChatState {
   conversationOrder: string[];
   typing: Record<string, boolean>;
   sendMessage: (conversationId: string, text: string) => void;
-  /** Find or start a DM with a user; returns the conversation id. */
   getOrCreateConversationWith: (userId: string) => string;
-  /** Convenience for story replies etc.  start/append a DM to a user. */
   sendMessageToUser: (userId: string, text: string) => string;
   markConversationRead: (conversationId: string) => void;
 }
@@ -105,7 +103,6 @@ export const useChatStore = create<ChatState>((set, get) => ({
       ],
     }));
 
-    // Local "sent" ack  feels instant even before the socket round-trips.
     setTimeout(() => patchStatus(set, message.id, "sent"), 250);
 
     chatSocket.send(message, () => {
@@ -154,7 +151,6 @@ function patchStatus(
   });
 }
 
-// Bridge the dummy socket's "server" events into the store.
 chatSocket.on((event: ServerEvent) => {
   const set = useChatStore.setState;
   const get = useChatStore.getState;
@@ -186,7 +182,6 @@ chatSocket.on((event: ServerEvent) => {
     return;
   }
 
-  // Incoming peer message.
   const { message } = event;
   const conversation = get().conversations[message.conversationId];
   if (!conversation) return;

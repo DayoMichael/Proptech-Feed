@@ -77,7 +77,6 @@ export function ChatView({ conversationId }: { conversationId: string }) {
 
   return (
     <div className="-mx-3 -mb-6 -mt-4 flex h-[calc(100dvh-7rem-env(safe-area-inset-bottom))] flex-col overflow-hidden border-0 bg-card sm:-mx-4 lg:mx-0 lg:my-0 lg:h-[calc(100dvh-6.5rem)] lg:rounded-xl lg:border">
-      {/* Header */}
       <div className="flex items-center gap-3 border-b px-3 py-2.5 sm:px-4">
         <Link
           href="/messages"
@@ -115,7 +114,6 @@ export function ChatView({ conversationId }: { conversationId: string }) {
         </div>
       </div>
 
-      {/* Messages */}
       <div className="flex-1 overflow-y-auto px-3 py-4 sm:px-4">
         {ids.map((id, i) => {
           const message = messages[id];
@@ -148,7 +146,6 @@ export function ChatView({ conversationId }: { conversationId: string }) {
                     mine
                       ? "bg-primary text-primary-foreground"
                       : "bg-secondary text-foreground",
-                    // Rounded with a subtle tail on the last bubble of a run.
                     mine
                       ? lastInRun
                         ? "rounded-2xl rounded-br-md"
@@ -182,7 +179,6 @@ export function ChatView({ conversationId }: { conversationId: string }) {
         <div ref={endRef} />
       </div>
 
-      {/* Composer */}
       <form
         onSubmit={submit}
         className="flex items-center gap-2 border-t px-3 py-3 sm:px-4"

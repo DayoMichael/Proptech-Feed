@@ -23,7 +23,6 @@ interface PhotonFeature {
   properties: PhotonProps;
 }
 
-// Centre of Nigeria  biases Photon results toward local places first.
 const NG_LAT = 9.082;
 const NG_LON = 8.6753;
 const ENDPOINT = "https://photon.komoot.io/api/";

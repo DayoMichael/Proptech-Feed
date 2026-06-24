@@ -1,9 +1,3 @@
-// Client-side entry point for the compression worker.
-//
-// One lazily-spawned worker is shared across all uploads; requests are matched
-// to responses by id over a small pending map. If the platform lacks Workers or
-// OffscreenCanvas, we degrade gracefully to the original file so uploads never
-// break — the optimisation is additive, never load-bearing.
 
 export interface CompressResult {
   url: string;
@@ -50,8 +44,6 @@ function getWorker(): Worker | null {
           resolve(event.data);
         }
       };
-      // If the worker fails to load or crashes, don't leave callers hanging —
-      // resolve everything in flight so they fall back to the original file.
       worker.onerror = () => flushPending("worker error");
       worker.onmessageerror = () => flushPending("worker message error");
     } catch {
@@ -61,7 +53,6 @@ function getWorker(): Worker | null {
   return worker;
 }
 
-/** Read intrinsic dimensions without the worker (fallback path). */
 function probe(url: string): Promise<{ width: number; height: number }> {
   return new Promise((resolve) => {
     const img = new Image();
@@ -78,10 +69,6 @@ async function passthrough(file: File): Promise<CompressResult> {
   return { url, width, height, bytesBefore: file.size, bytesAfter: file.size };
 }
 
-/**
- * Downscale + re-encode an image to web-sized WebP on a worker thread.
- * Returns an object URL for the (usually much smaller) result.
- */
 export async function compressImage(file: File): Promise<CompressResult> {
   let w: Worker | null = null;
   try {

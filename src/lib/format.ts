@@ -7,7 +7,6 @@ const UNITS: [limitSeconds: number, divisor: number, suffix: string][] = [
   [31557600, 2629800, "mo"],
 ];
 
-/** Compact, Twitter-style relative time: "Just Now", "20m", "12h", "3w". */
 export function relativeTime(iso: string, now: number = Date.now()): string {
   const seconds = Math.max(0, (now - new Date(iso).getTime()) / 1000);
   if (seconds < 45) return "Just Now";
@@ -18,7 +17,6 @@ export function relativeTime(iso: string, now: number = Date.now()): string {
   return `${Math.floor(seconds / 31557600)}y`;
 }
 
-/** Compact counts: 999 -> "999", 1200 -> "1.2k", 1_500_000 -> "1.5m". */
 export function compactNumber(value: number): string {
   if (value < 1000) return String(value);
   if (value < 1_000_000) return trim(value / 1000) + "k";

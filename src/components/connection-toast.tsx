@@ -7,12 +7,6 @@ import { cn } from "@/lib/utils";
 
 type Status = "online" | "offline";
 
-/**
- * A small toast pinned below the top bar that surfaces connectivity changes.
- * Offline stays up until you're back; "Back online" shows briefly then hides.
- * The pill animates its width as the message changes, so it visibly shrinks
- * from the long offline copy down to "Back online".
- */
 export function ConnectionToast() {
   const [status, setStatus] = useState<Status>("online");
   const [visible, setVisible] = useState(false);
@@ -41,7 +35,6 @@ export function ConnectionToast() {
     window.addEventListener("offline", goOffline);
     window.addEventListener("online", goOnline);
 
-    // Surface it immediately if the page loads already offline.
     if (!navigator.onLine) queueMicrotask(goOffline);
 
     return () => {
@@ -51,8 +44,6 @@ export function ConnectionToast() {
     };
   }, []);
 
-  // Lock the pill to the natural width of its current content, so the change
-  // between messages animates the width instead of snapping.
   useLayoutEffect(() => {
     const el = innerRef.current;
     if (!el) return;

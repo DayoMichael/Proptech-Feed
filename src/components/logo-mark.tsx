@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
 
-/** Icon-only glyph from the Expert Listing logo, for square/badge contexts. */
 export function LogoMark({ className }: { className?: string }) {
   return (
     <svg

@@ -24,7 +24,14 @@ export function AuthButton() {
 
   if (!user) {
     return (
-      <Button size="sm" className="rounded-full px-4" onClick={openSignIn}>
+      <Button
+        variant="ghost"
+        onClick={openSignIn}
+        className={cn(
+          "px-2 text-base font-semibold text-foreground hover:bg-transparent",
+          "lg:rounded-full lg:bg-primary lg:px-4 lg:text-sm lg:text-primary-foreground lg:hover:bg-primary/90",
+        )}
+      >
         Sign In
       </Button>
     );

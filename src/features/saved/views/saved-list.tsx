@@ -11,8 +11,6 @@ export function SavedList() {
   const feedOrder = useFeedStore((s) => s.feedOrder);
   const savedPostIds = useFeedStore((s) => s.savedPostIds);
 
-  // Keep feed ordering; filtering by the saved set keeps this view in sync
-  // unsaving a post in the feed (or here) removes it instantly.
   const saved = feedOrder.filter((id) => savedPostIds.has(id));
 
   return (

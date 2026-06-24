@@ -3,8 +3,6 @@ import { blurDataUrl } from "@/lib/blur";
 
 const avatar = (n: number) => `https://i.pravatar.cc/120?img=${n}`;
 
-// Real estate / interior photos (Unsplash). A seed maps deterministically to
-// one of these so the same post always shows the same picture.
 const HOUSING_IMAGE_IDS = [
   "1568605114967-8130f3a36994",
   "1570129477492-45c003edd2be",
@@ -138,8 +136,37 @@ export const users: Record<string, User> = {
   },
 };
 
-/** The signed-in viewer (drives "your" avatar, story, and composer). */
 export const currentUser: User = users.miracle;
+
+const storyPeople: ReadonlyArray<{ name: string; img: number }> = [
+  { name: "Alex Rivera", img: 1 },
+  { name: "Jordan Bello", img: 3 },
+  { name: "Taylor Quinn", img: 7 },
+  { name: "Jamie Cole", img: 11 },
+  { name: "Jordan Vale", img: 16 },
+  { name: "Emerson Johnson", img: 18 },
+  { name: "Sydney Park", img: 20 },
+  { name: "Quinn Adeyemi", img: 22 },
+  { name: "Parker Obi", img: 24 },
+  { name: "Hayden Cross", img: 26 },
+  { name: "Riley Mensah", img: 28 },
+  { name: "Morgan Diallo", img: 30 },
+  { name: "Casey Bright", img: 34 },
+  { name: "Avery Stone", img: 36 },
+  { name: "Drew Hassan", img: 38 },
+  { name: "Reese Okafor", img: 40 },
+];
+
+for (const { name, img } of storyPeople) {
+  const id = name.toLowerCase().replace(/[^a-z]+/g, "-");
+  users[id] = {
+    id,
+    name,
+    handle: id,
+    avatarUrl: avatar(img),
+    type: "individual",
+  };
+}
 
 const img = (seed: string, w: number, h: number, alt: string): MediaItem => ({
   type: "image",
@@ -676,9 +703,6 @@ const GEN_TEXTS = [
   "Weekend open house was packed! Thanks to everyone who came through.",
 ];
 
-// Deterministic filler posts so the feed is large enough to exercise infinite
-// scroll and virtualization. Values are derived from the index (no randomness)
-// to keep server and client render output identical.
 function buildMorePosts(from: number, to: number): Post[] {
   const list: Post[] = [];
   for (let i = from; i <= to; i++) {
@@ -758,7 +782,6 @@ function buildMorePosts(from: number, to: number): Post[] {
 
 export const posts: Post[] = [...curatedPosts, ...buildMorePosts(21, 100)];
 
-// Portrait media sized for the full-screen story viewer (9:16).
 const storyImg = (seed: string, alt: string): MediaItem => ({
   type: "image",
   url: photo(seed, 1080),
@@ -878,9 +901,22 @@ export const stories: Story[] = [
       },
     ],
   },
+  ...storyPeople.map((person, i) => {
+    const id = person.name.toLowerCase().replace(/[^a-z]+/g, "-");
+    const segmentCount = (i % 3) + 1;
+    return {
+      id: `st-${id}`,
+      userId: id,
+      segments: Array.from({ length: segmentCount }, (_, s) => ({
+        id: `st-${id}-${s + 1}`,
+        media: storyImg(`st-${id}-${s}`, `${person.name}'s listing`),
+        durationMs: IMAGE_STORY_MS,
+        createdAt: minutesAgo(120 + i * 7 + s),
+      })),
+    };
+  }),
 ];
 
-/** Cursor-based pagination over the mock feed (cursor = last post id). */
 export function getFeedPage(cursor: string | null, limit = 4): FeedPage {
   const start = cursor ? posts.findIndex((p) => p.id === cursor) + 1 : 0;
   const slice = posts.slice(start, start + limit);

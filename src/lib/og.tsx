@@ -4,7 +4,6 @@ import { SITE_NAME } from "@/lib/seo";
 export const OG_SIZE = { width: 1200, height: 630 };
 export const OG_ALT = "Expert Listing — Real estate listings, simplified.";
 
-/** Shared 1200×630 social card used by the OG and Twitter image routes. */
 export function ogElement() {
   return (
     <div

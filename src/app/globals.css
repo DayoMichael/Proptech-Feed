@@ -35,7 +35,6 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
 
-  /* Expert Listing custom tokens */
   --color-surface-sunken: var(--surface-sunken);
   --color-brand: var(--brand);
   --color-brand-strong: var(--brand-strong);
@@ -54,7 +53,6 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* Light mode  warm-neutral with a faint green tint (Expert Listing spec) */
 :root {
   color-scheme: light;
 
@@ -82,7 +80,7 @@
   --ring: #2f8f63;
 
   --brand: #2f8f63;
-  --brand-strong: #25774f; /* green text on white, AA */
+  --brand-strong: #25774f;
 
   --chip-sale-bg: rgba(47, 143, 99, 0.12);
   --chip-sale-fg: #25774f;
@@ -102,7 +100,6 @@
   --sidebar-ring: #2f8f63;
 }
 
-/* Dark mode  given palette (design default) */
 .dark {
   color-scheme: dark;
 
@@ -130,7 +127,7 @@
   --ring: #2f8f63;
 
   --brand: #2f8f63;
-  --brand-strong: #5fbe8c; /* green text on dark surfaces */
+  --brand-strong: #5fbe8c;
 
   --chip-sale-bg: rgba(47, 143, 99, 0.16);
   --chip-sale-fg: #5fbe8c;
@@ -148,7 +145,6 @@
   --sidebar-ring: #2f8f63;
 }
 
-/* Full-black surface on mobile; the layered grey returns on desktop. */
 @media (min-width: 1024px) {
   .dark {
     --background: #171717;
@@ -167,7 +163,6 @@
   }
 }
 
-/* Respect users who prefer reduced motion (stories/transitions) */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

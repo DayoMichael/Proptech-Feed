@@ -25,7 +25,6 @@ export function PostCard({
 
   const focusComment = () => commentRef.current?.focus();
 
-  // Show the top comment, plus my own latest comment if I've added one.
   const previewIds: string[] = [];
   if (post.topCommentId) previewIds.push(post.topCommentId);
   const myLatest = (topLevelIds ?? [])

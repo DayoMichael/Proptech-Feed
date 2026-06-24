@@ -10,7 +10,7 @@ npm run dev
 npm run build && npm start
 ```
 
-Node 18+, no env vars, runs on mock data. Two things to know: state lives in memory so a refresh wipes everything including your sign in, and the passkey prompt is credential-less, there to show the flow and the gating, not to store a real credential.
+Node 18+, no env vars, runs on mock data. Two things to know: feed state lives in memory so a refresh resets posts, likes, and comments, but your sign in is persisted to localStorage so it survives a refresh and only clears when you sign out; and the passkey prompt is credential-less, there to show the flow and the gating, not to store a real credential.
 
 ## The Goal
 
@@ -35,7 +35,7 @@ The reasoning: Instagram buries comments in a flat list with no permalink, which
 ## What you can do
 
 - Sign in with a passkey (and you're prompted to when you try to post, like, comment, or open a gated page)
-- Post (text, image, carousel, video) with location search in the composer
+- **Post with media** — attach a photo (single image or a multi-image carousel) or a video, alongside text and location search in the composer
 - Like and reply, in proper threads
 - Send messages (DMs with typing and seen states)
 - Save and share posts

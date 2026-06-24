@@ -15,12 +15,6 @@ interface BlurImageProps {
   className?: string;
 }
 
-/**
- * A `fill` image that stays blurred until the full image has loaded, then
- * fades in  instead of letting the real image paint progressively over a slow
- * connection. The blur is its own layer (a tiny embedded data URL) so there's
- * no extra request and zero layout shift.
- */
 export function BlurImage({
   src,
   alt,
@@ -33,7 +27,6 @@ export function BlurImage({
   const [loaded, setLoaded] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
 
-  // A cached image can already be complete before onLoad would fire.
   useEffect(() => {
     if (imgRef.current?.complete) {
       queueMicrotask(() => setLoaded(true));

@@ -1,10 +1,3 @@
-// Off-main-thread image compression.
-//
-// This runs in a Web Worker, so the decode → downscale → re-encode pipeline
-// never touches the UI thread: scrolling, tap handling and React renders keep
-// flowing while a multi-megapixel photo is crushed to a web-sized WebP.
-// `createImageBitmap` + `OffscreenCanvas` are both available off-thread, so the
-// whole job — including the GPU-ish raster work — happens here.
 
 interface CompressRequest {
   id: number;
@@ -21,8 +14,6 @@ interface CompressResponse {
   error?: string;
 }
 
-// `self` is typed as a Window in a DOM lib context; narrow it to the worker
-// surface we actually use without pulling in the webworker lib globally.
 interface WorkerScope {
   onmessage: ((event: MessageEvent<CompressRequest>) => void) | null;
   postMessage(message: CompressResponse): void;

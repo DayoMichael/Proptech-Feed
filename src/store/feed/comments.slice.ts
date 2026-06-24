@@ -28,9 +28,7 @@ const initialIndexes = buildIndexes(seedComments);
 
 export interface CommentsSlice {
   comments: Record<string, Comment>;
-  /** Top-level comment ids per post. */
   commentsByPost: Record<string, string[]>;
-  /** Child comment ids per parent comment (the children adjacency list). */
   repliesByComment: Record<string, string[]>;
   toggleCommentLike: (commentId: string) => void;
   addComment: (

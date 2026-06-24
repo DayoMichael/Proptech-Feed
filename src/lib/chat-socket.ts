@@ -8,12 +8,6 @@ export type ServerEvent =
 
 type Handler = (event: ServerEvent) => void;
 
-/**
- * A stand-in for a real WebSocket: a tiny pub/sub built on EventTarget. The
- * store publishes outgoing messages via `send()` and subscribes to the
- * simulated "server" responses (ack → peer reads → peer types → peer replies)
- * through `on()`. Swapping this for a real socket later touches nothing else.
- */
 class ChatSocket {
   private target = new EventTarget();
 
@@ -28,7 +22,6 @@ class ChatSocket {
     this.target.dispatchEvent(new CustomEvent("server", { detail: event }));
   }
 
-  /** Client → server: delivery ack, peer reads, peer types, peer replies. */
   send(message: Message, makeReply: () => Message) {
     const { conversationId, id } = message;
     setTimeout(

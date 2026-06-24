@@ -35,7 +35,6 @@ export const seedConversations: Conversation[] = [
 ];
 
 export const seedMessages: Message[] = [
-  // Dan  newest conversation, one unread reply.
   {
     id: "m-dan-1",
     conversationId: "cv-dan",
@@ -61,7 +60,6 @@ export const seedMessages: Message[] = [
     status: "delivered",
   },
 
-  // Amaka
   {
     id: "m-amaka-1",
     conversationId: "cv-amaka",
@@ -79,7 +77,6 @@ export const seedMessages: Message[] = [
     status: "seen",
   },
 
-  // Felix
   {
     id: "m-felix-1",
     conversationId: "cv-felix",
@@ -89,7 +86,6 @@ export const seedMessages: Message[] = [
     status: "seen",
   },
 
-  // Boyd
   {
     id: "m-boyd-1",
     conversationId: "cv-boyd",
@@ -108,7 +104,6 @@ export const seedMessages: Message[] = [
   },
 ];
 
-/** Mock presence  drives the green "online" dots. */
 export const onlineUserIds = new Set(["dan", "amaka", "ima"]);
 
 export const AUTO_REPLIES = [

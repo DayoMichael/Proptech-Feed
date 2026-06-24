@@ -15,10 +15,8 @@ function nextStoryId(): string {
 
 export interface StoriesSlice {
   stories: Story[];
-  /** Story ids the viewer has already watched (drives the rail ring state). */
   seenStories: Set<string>;
   markStorySeen: (storyId: string) => void;
-  /** Add a segment to the current user's story (creating it if needed). */
   addStory: (media: MediaItem) => void;
 }
 

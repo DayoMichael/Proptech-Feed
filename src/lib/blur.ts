@@ -1,4 +1,3 @@
-// Isomorphic base64 (Node on the server, btoa in the browser).
 const toBase64 = (str: string): string =>
   typeof window === "undefined"
     ? Buffer.from(str).toString("base64")
@@ -12,14 +11,6 @@ function hash(seed: string): number {
   return Math.abs(h);
 }
 
-/**
- * A tiny gradient placeholder derived deterministically from a seed.
- * Embedded directly in the post payload as a data URL  no second network
- * request, so the blur-up shows instantly even on slow 3G, with zero CLS.
- *
- * In production this slot would carry a real BlurHash/ThumbHash decoded from
- * the source image; the contract (a data URL on `blurDataURL`) is identical.
- */
 export function blurDataUrl(seed: string): string {
   const base = hash(seed) % 360;
   const c1 = `hsl(${base} 18% 24%)`;

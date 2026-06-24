@@ -59,8 +59,6 @@ export function MediaCarousel({
       <div style={{ aspectRatio: `${first.width} / ${first.height}` }}>
         <CarouselContent className="ml-0 h-full">
           {images.map((image, i) => {
-            // Only mount slides near the active one so we don't fetch every
-            // photo up front; Data Saver narrows that to the current slide.
             const window = dataSaver ? 0 : 1;
             const nearby = Math.abs(i - current) <= window;
             return (
@@ -122,7 +120,7 @@ export function MediaCarousel({
             onClick={() => api?.scrollTo(i)}
             aria-label={`Go to image ${i + 1}`}
             aria-current={i === current}
-            className="flex size-4 items-center justify-center"
+            className="flex h-4 w-2.5 items-center justify-center"
           >
             <span
               className={cn(

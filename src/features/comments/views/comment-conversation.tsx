@@ -41,7 +41,7 @@ export function CommentConversation({ commentId }: { commentId: string }) {
 
   const author = users[comment.authorId];
   const ancestors = collectAncestors(comments, commentId);
-  const parentMost = ancestors.slice(0, -1); // collapsible middle
+  const parentMost = ancestors.slice(0, -1);
   const immediateParentId = ancestors.at(-1);
   const replies = replyIds ?? [];
 
@@ -67,7 +67,6 @@ export function CommentConversation({ commentId }: { commentId: string }) {
 
       <div className="flex-1 overflow-y-auto">
         <div className="p-4">
-        {/* Root post */}
         <ChainRow
           author={users[post.authorId]}
           time={relativeTime(post.createdAt)}
@@ -75,7 +74,6 @@ export function CommentConversation({ commentId }: { commentId: string }) {
           href={`/post/${post.id}`}
         />
 
-        {/* Collapsible earlier ancestors (dotted connector, X-style) */}
         {parentMost.length > 0 && !showEarlier && (
           <button
             type="button"
@@ -111,7 +109,6 @@ export function CommentConversation({ commentId }: { commentId: string }) {
           />
         )}
 
-        {/* Focal comment */}
         <div className="pt-1">
           <div className="flex items-center gap-3">
             <Avatar className="size-10 shrink-0">
