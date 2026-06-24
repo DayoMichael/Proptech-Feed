@@ -41,7 +41,7 @@ export function MobileMenu() {
           <Menu className="size-5" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="w-[18rem] p-0">
+      <SheetContent side="right" className="w-[18rem] p-0">
         <SheetHeader className="flex-row items-center justify-between px-4">
           <SheetTitle asChild>
             <Brand />
