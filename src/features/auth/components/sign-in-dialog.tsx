@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Fingerprint, Loader2, ShieldCheck } from "lucide-react";
 
-import { currentUser } from "@/lib/mock/data";
+import { currentUser, userEmail } from "@/lib/mock/data";
 import { Button } from "@/components/ui/button";
 import { LogoMark } from "@/components/logo-mark";
 import {
@@ -33,7 +33,7 @@ async function requestPasskey(): Promise<boolean> {
         rp: { name: "Expert Listing" },
         user: {
           id: userId,
-          name: `${currentUser.handle}@expertlisting.app`,
+          name: userEmail,
           displayName: currentUser.name,
         },
         pubKeyCredParams: [
@@ -54,6 +54,8 @@ async function requestPasskey(): Promise<boolean> {
 const isPasskeySupported = () =>
   typeof window !== "undefined" && !!window.PublicKeyCredential;
 
+export type SignInMethod = "passkey" | "demo";
+
 export function SignInDialog({
   open,
   onOpenChange,
@@ -61,14 +63,14 @@ export function SignInDialog({
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSuccess: () => void;
+  onSuccess: (method: SignInMethod) => void;
 }) {
   const [status, setStatus] = useState<Status>("idle");
 
-  function finish() {
+  function finish(method: SignInMethod) {
     setStatus("success");
     window.setTimeout(() => {
-      onSuccess();
+      onSuccess(method);
       setStatus("idle");
     }, 550);
   }
@@ -77,18 +79,18 @@ export function SignInDialog({
     setStatus("verifying");
 
     if (!isPasskeySupported()) {
-      window.setTimeout(finish, 1100);
+      window.setTimeout(() => finish("demo"), 1100);
       return;
     }
 
     const ok = await requestPasskey();
-    if (ok) finish();
+    if (ok) finish("passkey");
     else setStatus("error");
   }
 
   function demoSignIn() {
     setStatus("verifying");
-    window.setTimeout(finish, 900);
+    window.setTimeout(() => finish("demo"), 900);
   }
 
   const locked = status === "verifying" || status === "success";

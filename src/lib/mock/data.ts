@@ -138,6 +138,8 @@ export const users: Record<string, User> = {
 
 export const currentUser: User = users.miracle;
 
+export const userEmail = `${currentUser.handle}@expertlisting.app`;
+
 const storyPeople: ReadonlyArray<{ name: string; img: number }> = [
   { name: "Alex Rivera", img: 1 },
   { name: "Jordan Bello", img: 3 },

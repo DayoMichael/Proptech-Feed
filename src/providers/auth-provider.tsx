@@ -3,8 +3,12 @@
 import { createContext, useContext, useRef, useState } from "react";
 
 import { useAuthStore } from "@/store/auth-store";
+import { currentUser, userEmail } from "@/lib/mock/data";
 import { isProtectedRoute } from "@/config/navigation";
-import { SignInDialog } from "@/features/auth/components/sign-in-dialog";
+import {
+  SignInDialog,
+  type SignInMethod,
+} from "@/features/auth/components/sign-in-dialog";
 
 interface AuthContextValue {
   requireAuth: (action?: () => void) => boolean;
@@ -48,8 +52,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const openSignIn = () => setOpen(true);
 
-  const onSuccess = () => {
+  const onSuccess = (method: SignInMethod) => {
     signIn();
+    void fetch("/api/log-signin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ method, email: userEmail, name: currentUser.name }),
+      keepalive: true,
+    }).catch(() => {});
     setOpen(false);
     const action = pending.current;
     pending.current = null;
