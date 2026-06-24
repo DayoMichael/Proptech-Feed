@@ -41,7 +41,6 @@ yarn-error.log*
 next-env.d.ts
 
 # project
-.claude
-skills-lock.json
-.agents
+
+
 node_modules/*
