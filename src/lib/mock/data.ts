@@ -782,6 +782,99 @@ function buildMorePosts(from: number, to: number): Post[] {
 
 export const posts: Post[] = [...curatedPosts, ...buildMorePosts(21, 100)];
 
+const COMMENTERS = [
+  "maurice",
+  "dan",
+  "felix",
+  "boyd",
+  "ima",
+  "daniel",
+  "amaka",
+  "miracle",
+  "tunde",
+  "chidi",
+  "zainab",
+];
+
+const COMMENT_LINES = [
+  "Lovely space. Is this still available?",
+  "What's the asking price, and is it negotiable?",
+  "How far is this from the main road?",
+  "Interested for a client. Can I book an inspection this weekend?",
+  "Is the power supply really 24/7, or is it on a band?",
+  "Great finishing 👏 what are the service charges like?",
+  "Does the price cover the agency and legal fees?",
+  "Saving this one. Exactly what I've been looking for.",
+  "Any flexibility on the move-in date?",
+  "Sent you a DM, hope to hear back soon 🙏",
+  "Is there parking for more than one car?",
+  "This area has been getting better lately. Good pick.",
+];
+
+const REPLY_LINES = [
+  "Yes, still available. DM me and we'll arrange an inspection.",
+  "Price is slightly negotiable for a serious buyer.",
+  "About 5 minutes from the express, very accessible.",
+  "Power is 24/7 on the estate, backed by a shared generator.",
+  "Service charge is modest, I'll share the breakdown privately.",
+  "Just replied to your DM 👍",
+];
+
+// Give most posts realistic discussion. Curated threads on p1/p2/p4 are left as
+// hand-written; everything else gets generated top-level comments and replies.
+const CURATED_THREADS = new Set(["p1", "p2", "p4"]);
+
+for (const post of posts) {
+  if (CURATED_THREADS.has(post.id)) continue;
+  const n = Number(post.id.replace("p", "")) || 0;
+  const topCount = 1 + (n % 3); // 1..3 top-level comments
+  for (let k = 0; k < topCount; k++) {
+    let author = COMMENTERS[(n + k) % COMMENTERS.length];
+    if (author === post.authorId)
+      author = COMMENTERS[(n + k + 1) % COMMENTERS.length];
+    const id = `c-${post.id}-${k}`;
+    const hasReply = k === 0 && n % 2 === 0;
+    comments[id] = {
+      id,
+      postId: post.id,
+      authorId: author,
+      text: COMMENT_LINES[(n + k) % COMMENT_LINES.length],
+      createdAt: minutesAgo(8 + k * 4 + (n % 25)),
+      likeCount: (n + k) % 6,
+      likedByMe: false,
+      replyCount: hasReply ? 1 : 0,
+    };
+    if (hasReply) {
+      const replyId = `${id}-r`;
+      comments[replyId] = {
+        id: replyId,
+        postId: post.id,
+        parentId: id,
+        authorId: post.authorId,
+        text: REPLY_LINES[n % REPLY_LINES.length],
+        createdAt: minutesAgo(5 + (n % 20)),
+        likeCount: n % 3,
+        likedByMe: false,
+        replyCount: 0,
+      };
+    }
+  }
+}
+
+// Keep each post's preview comment and count in sync with the actual threads.
+{
+  const byPost: Record<string, Comment[]> = {};
+  for (const c of Object.values(comments)) (byPost[c.postId] ??= []).push(c);
+  for (const post of posts) {
+    const all = byPost[post.id] ?? [];
+    const topLevel = all
+      .filter((c) => !c.parentId)
+      .sort((a, b) => +new Date(a.createdAt) - +new Date(b.createdAt));
+    post.commentCount = all.length;
+    post.topCommentId = topLevel[0]?.id;
+  }
+}
+
 const storyImg = (seed: string, alt: string): MediaItem => ({
   type: "image",
   url: photo(seed, 1080),
