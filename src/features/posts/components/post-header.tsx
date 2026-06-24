@@ -1,6 +1,5 @@
 import { MoreHorizontal } from "lucide-react";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { relativeTime } from "@/lib/format";
 import type { Post, User } from "@/types";
 import { UserTypeBadge } from "@/features/posts/components/user-type-badge";
@@ -20,11 +19,6 @@ interface PostHeaderProps {
 export function PostHeader({ author, category, createdAt }: PostHeaderProps) {
   return (
     <div className="flex items-start gap-3">
-      <Avatar className="size-10 shrink-0">
-        <AvatarImage src={author.avatarUrl} alt="" />
-        <AvatarFallback>{author.name.slice(0, 2)}</AvatarFallback>
-      </Avatar>
-
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-x-1.5">
           <span className="truncate font-medium leading-tight">

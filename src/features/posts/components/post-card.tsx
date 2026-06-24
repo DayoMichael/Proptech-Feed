@@ -44,11 +44,11 @@ export function PostCard({
     }));
 
   return (
-    <article className="rounded-xl border bg-card p-4 [contain-intrinsic-size:auto_30rem] [content-visibility:auto]">
+    <article className="bg-card p-4 [contain-intrinsic-size:auto_30rem] [content-visibility:auto] sm:rounded-xl sm:border">
       <PostBody postId={post.id} priority={priority} onComment={focusComment} />
 
       {previewItems.length > 0 && (
-        <div className="mt-4">
+        <div className="ml-13 mt-4">
           <CommentPreview
             items={previewItems}
             commentCount={post.commentCount}
@@ -57,7 +57,7 @@ export function PostCard({
         </div>
       )}
 
-      <div className="mt-3 border-t pt-3">
+      <div className="ml-13 mt-3 border-t pt-3">
         <ReplyComposer postId={post.id} inputRef={commentRef} />
       </div>
     </article>

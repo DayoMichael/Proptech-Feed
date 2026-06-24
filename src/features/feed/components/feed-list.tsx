@@ -99,7 +99,7 @@ export function FeedList() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="-mx-3 divide-y divide-border sm:mx-0 sm:space-y-4 sm:divide-y-0">
       {shown.map((postId, i) => (
         <div key={postId}>
           <PostCard postId={postId} priority={i < 2} />
@@ -110,14 +110,18 @@ export function FeedList() {
       ))}
 
       {hasMore && (
-        <div ref={sentinelRef} aria-hidden className="space-y-4">
+        <div
+          ref={sentinelRef}
+          aria-hidden
+          className="divide-y divide-border sm:space-y-4 sm:divide-y-0"
+        >
           <PostCardSkeleton />
           <PostCardSkeleton />
         </div>
       )}
 
       {lockedMore && (
-        <div className="flex flex-col items-center gap-3 rounded-xl border bg-card px-6 py-8 text-center">
+        <div className="mx-3 flex flex-col items-center gap-3 rounded-xl border bg-card px-6 py-8 text-center sm:mx-0">
           <p className="font-semibold">Sign in to see more</p>
           <p className="max-w-xs text-sm text-muted-foreground">
             Create an account to keep scrolling listings, save posts and message
